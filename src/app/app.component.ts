@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from "@angular/core";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { NavbarComponent } from "./navbar/navbar.component";
+import { RouterModule } from "@angular/router";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  imports: [MatToolbarModule, NavbarComponent, RouterModule],
+  templateUrl: "./app.component.html",
+  styleUrl: "./app.component.css",
 })
 export class AppComponent {
-  title = 'imp.pass-ng';
+  title = "Imp.Pass";
 }
