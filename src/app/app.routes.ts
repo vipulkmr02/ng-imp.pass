@@ -10,15 +10,11 @@ export const routes: Routes = [
   {
     path: "signup",
     component: LoginSignupComponent,
-    data: {
-      activate: 'signup'
-    }
+    data: { login: false },
   },
   {
     path: "login",
     component: LoginSignupComponent,
-    data: {
-      activate: 'login'
-    }
+    data: { login: true },
   },
 ];

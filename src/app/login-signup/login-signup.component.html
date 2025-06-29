@@ -1,1 +1,40 @@
-<p>login-signup works!</p>
+<main>
+
+  <h1 class="title">{{this.login ? "Login" :"Sign Up"}}</h1>
+
+  <form [formGroup]="this.loginFormGroup" action="">
+    <div class="login" *ngIf="this.login">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput required placeholder="eg: johndoe@gmail.com" type="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput required type="password" />
+      </mat-form-field>
+
+    </div>
+
+    <div class="signup" *ngIf="!this.login">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput required placeholder="eg: johndoe@gmail.com" type="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput required type="password" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput required type="password" />
+      </mat-form-field>
+
+    </div>
+    <button mat-flat-button aria-valuetext="Submit Button">{{this.login ? "Login" : "Sign Up"}}</button>
+  </form>
+</main>
