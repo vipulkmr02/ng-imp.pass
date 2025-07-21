@@ -1,6 +1,51 @@
-main {
+#mainContent {
+  height: 100vh;
+}
+
+.primary-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.secondary-text {
+  font-size: 1rem;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.button-wrapper {
+  margin: .5rem;
   display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
+  gap: 1rem;
+}
+
+#logged-off-sidenav-msg {
+  display: grid;
+  place-content: center;
   height: 100%;
+  color: gray;
+}
+
+.spinnerContainer {
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-content: center;
+  background: rgba(000, 000, 000, 0.2);
+}
+
+@media (max-width: 600px) {
+  .hide-on-small-screen {
+    display: none;
+  }
+
+  .show-on-small-screen {
+    display: block;
+  }
 }

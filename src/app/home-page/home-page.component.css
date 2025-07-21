@@ -19,21 +19,72 @@
   gap: 5rem;
 }
 
+footer {
+  display: none;
+  div {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
 @media (max-width: 600px) {
   .hero-title {
     text-align: center;
   }
 
   .main-content {
-    height: 80vh;
+    height: 84vh;
     font-size: 1rem;
   }
 
+
   .buttons {
     gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
 
     button {
-      width: 100%;
+      width: 70vw;
+      font-size: 1.25rem;
     }
   }
+
+  footer {
+    display: block;
+  }
+}
+
+.home-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: #212121;
+  text-align: center;
+  padding: 2rem;
+  margin: 2rem;
+}
+
+.home-hero-content {
+  max-width: 600px;
+}
+
+.home-title {
+  font-size: 3rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.home-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: #424242;
+}
+
+.home-actions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
 }

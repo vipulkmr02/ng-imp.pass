@@ -1,0 +1,45 @@
+<h1 class="title">Vault</h1>
+
+<main id="vault">
+  @if(this.passwords) {
+  <div class="passwords">
+    <mat-selection-list>
+      @for (x of this.passwords; track this.passwords) {
+      <mat-list-item>
+        <div class="password">
+          <div class="pid-sec">
+            <h4>
+              {{ x.pID}}
+            </h4>
+          </div>
+          <div class="password-sec">
+            <div>
+              {{ this.visibility[x._id] ? x.password : '*******' }}
+            </div>
+            <div class="buttons">
+              <button mat-icon-button (click)="toggleVisibility(x._id)">
+                <mat-icon>{{this.visibility[x._id] ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <button mat-icon-button (click)="toggleVisibility(x._id)">
+                <mat-icon>content_copy</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-list-item>
+      }
+    </mat-selection-list>
+  </div>
+  } @else {
+  <div class="no-data">
+    <mat-icon>cancel_outline</mat-icon>
+    <h1>No Passwords</h1>
+    <h4>Create by clicking the 'Add' button below.</h4>
+  </div>
+  }
+  <div class="bottom-buttons">
+    <button mat-flat-button>
+      <mat-icon>add</mat-icon> Add
+    </button>
+  </div>
+</main>

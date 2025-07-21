@@ -1,7 +1,48 @@
 <main>
-  <app-navbar title={{title}} [menuItems]="[
-    {name: 'logout', href: '/logout'},
-    {name: 'generator', href: '/generator'} ]">
-  </app-navbar>
-  <router-outlet />
+  @if(ui.loading) {
+  <div class="spinnerContainer">
+    <mat-spinner diameter="50" />
+  </div>
+  }
+  <!-- <mat-sidenav-container [hasBackdrop]="true">
+    <mat-sidenav #sidenav mode="over">
+      @if (this.authService.getSessionToken()) {
+      <mat-selection-list>
+        <mat-list-item *ngFor="let opt of options"> {{opt.name}} </mat-list-item>
+      </mat-selection-list>
+      } @else {
+      <div id="logged-off-sidenav-msg">
+        Login to see more Options
+      </div>
+      }
+    </mat-sidenav> -->
+
+    <main id="mainContent" style="height:100vh">
+      <mat-toolbar>
+        <!-- <button mat-icon-button (click)="sidenav.toggle()" aria-label="menu">
+          <mat-icon>menu</mat-icon>
+        </button> -->
+        <span style="display: flex; align-items: center" class="primary-text">
+          <mat-icon style="margin: .5rem">lock</mat-icon> {{this.title}}
+        </span>
+        <span class="spacer"></span>
+        <span class="secondary-text hide-on-small-screen">By <span style="font-weight: 700;">Vipul Kumar
+            Gupta</span></span>
+        <div class="button-wrapper hide-on-small-screen">
+          <button mat-stroked-button aria-label="github button">
+            Github
+          </button>
+          <button mat-stroked-button aria-label="contact button">
+            Contact
+          </button>
+          <a routerLink="logout" *ngIf="this.authService.authenticated$ | async" mat-flat-button aria-label="logout button">
+            <mat-icon>logout</mat-icon> Logout
+          </a>
+        </div>
+      </mat-toolbar>
+
+      <router-outlet />
+    </main>
+
+  <!-- </mat-sidenav-container> -->
 </main>

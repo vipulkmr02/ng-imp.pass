@@ -2,39 +2,76 @@
 
   <h1 class="title">{{this.login ? "Login" :"Sign Up"}}</h1>
 
-  <form [formGroup]="this.loginFormGroup" action="">
+  <form [formGroup]="this.login ? this.loginFormGroup : this.signupFormGroup" (ngSubmit)="this.onSubmit()">
     <div class="login" *ngIf="this.login">
 
       <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput required placeholder="eg: johndoe@gmail.com" type="email" />
+        <mat-label>E-mail</mat-label>
+        <input [formControl]="this.loginFormGroup.controls.email" matInput required placeholder="eg: johndoe@gmail.com" type="email" />
+        <mat-error>
+          @if (this.loginFormGroup.get('email')?.hasError('required')) { Required }
+          @if (this.loginFormGroup.get('email')?.hasError('email')) { Invalid E-mail }
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
-        <input matInput required type="password" />
+        <input formControlName="password" matInput required [type]="this.visibilityStates[0] ? 'text' : 'password'" />
+        <mat-error>
+          @if (this.loginFormGroup.getError('required', 'password')) { Required }
+          @if (this.loginFormGroup.getError('pattern', 'password')) { Invalid Password }
+        </mat-error>
+        <button type="button" mat-icon-button (click)="this.toggleVisibility(0)" matSuffix>
+          <mat-icon>{{this.visibilityStates[0] ? 'visibility': 'visibility_off' }}</mat-icon>
+        </button>
       </mat-form-field>
 
     </div>
 
     <div class="signup" *ngIf="!this.login">
-
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput required placeholder="eg: johndoe@gmail.com" type="email" />
+        <input matInput formControlName="email" required placeholder="eg: johndoe@gmail.com" type="email" />
+        <mat-error>
+          @if (this.signupFormGroup.get('email')?.hasError('required')) { Required }
+          @if (this.signupFormGroup.get('email')?.hasError('email')) { Invalid E-mail }
+        </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
-        <input matInput required type="password" />
+        <input (change)="this.passwordMismatchValidator()" formControlName="password" matInput required [type]="this.visibilityStates[1] ? 'text' : 'password'" />
+        <mat-error>
+          @if (this.signupFormGroup.getError('required', 'password')) { Required }
+          @if (this.signupFormGroup.getError('pattern', 'password')) { Invalid Password }
+        </mat-error>
+        <button type="button" (click)="this.toggleVisibility(1)" mat-icon-button matSuffix>
+          <mat-icon>{{this.visibilityStates[1] ? 'visibility': 'visibility_off' }}</mat-icon>
+        </button>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Confirm Password</mat-label>
-        <input matInput required type="password" />
+        <input (change)="this.passwordMismatchValidator()" formControlName="confirmPassword" matInput required [type]="this.visibilityStates[2] ? 'text' : 'password'" />
+        <mat-error>
+          @if (this.signupFormGroup.getError('required', 'confirmPassword')) { Required }
+          @if (this.signupFormGroup.getError('mismatch', 'confirmPassword')) { Passwords do not match }
+        </mat-error>
+        <button type="button" (click)="this.toggleVisibility(2)" mat-icon-button matSuffix>
+          <mat-icon>{{this.visibilityStates[2] ? 'visibility': 'visibility_off' }}</mat-icon>
+        </button>
       </mat-form-field>
 
     </div>
-    <button mat-flat-button aria-valuetext="Submit Button">{{this.login ? "Login" : "Sign Up"}}</button>
+    <button mat-flat-button type="submit" aria-valuetext="Submit Button">
+      {{this.login ? "Login" : "Sign Up"}}
+    </button>
   </form>
+
+  <!-- @if (this.snackBarMessage) { <span matSnackBarLabel>{{this.snackBarMessage}}</span> }
+  <span matSnackBarActions>
+    @if (this.snackBarButton) { <button matButton matSnackBarAction> {{this.snackBarButton}} </button> }
+    @else { <button mat-icon-button> <mat-icon>close</mat-icon> </button> }
+  </span> -->
 </main>

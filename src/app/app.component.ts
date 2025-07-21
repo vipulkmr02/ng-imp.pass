@@ -1,15 +1,36 @@
-import { Component } from "@angular/core";
+import { Component, inject, ViewChild } from "@angular/core";
 import { MatToolbarModule } from "@angular/material/toolbar";
-import { NavbarComponent } from "./navbar/navbar.component";
 import { RouterModule } from "@angular/router";
+import { MatSidenav, MatSidenavModule } from "@angular/material/sidenav";
+import { MatIconModule } from "@angular/material/icon";
+import { CommonModule } from "@angular/common";
+import { MatButtonModule } from "@angular/material/button";
+import { MatListModule } from "@angular/material/list";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { AuthService } from "./auth.service";
+import { UiService } from "./ui.service";
 
 @Component({
   selector: "app-root",
   standalone: true,
-  imports: [MatToolbarModule, NavbarComponent, RouterModule],
+  imports: [
+    MatToolbarModule,
+    RouterModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatButtonModule,
+    CommonModule,
+    MatListModule,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
 })
 export class AppComponent {
-  title = "Imp.Pass";
+  authService = inject(AuthService);
+  ui = inject(UiService);
+  title = "IMP.PASS";
+
+  @ViewChild("sidenav")
+  sidenav!: MatSidenav;
 }

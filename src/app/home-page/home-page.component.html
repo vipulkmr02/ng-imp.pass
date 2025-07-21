@@ -1,16 +1,21 @@
 <main class="main-content">
-  <div>
-    <h1 class="hero-title"> <span>Save <span style="font-family: monospace">Passwords</span>,</span> Securely </h1>
-    <p class="hero-subtitle">
-      Welcome to <strong>Imp.Pass</strong>, the ultimate solution for managing your digital credentials with unparalleled security.
-    </p>
-    <ul>
-      <li> Protecting your passwords with <strong>AES-256 Encryption</strong>. </li>
-      <li>Access from <strong>anywhere</strong> in the world.</li>
-    </ul>
-  </div>
-  <div class="buttons">
-    <a mat-flat-button routerLink="login">Login</a>
-    <a mat-flat-button routerLink="signup">Sign Up</a>
+  <div class="home-hero">
+    <div class="home-hero-content fade-up">
+      <h1 class="home-title">Save Passwords<br>Access Anywhere</h1>
+      <p class="home-subtitle">
+        A safe, secure, and user-friendly password manager.<br>
+        Get started now and explore the features!
+      </p>
+      <div class="home-actions">
+        @if (authService.getSessionToken()) {
+        <a mat-flat-button routerLink="vault">
+          <mat-icon>lock_outline</mat-icon>
+          Enter Vault
+        </a>}
+        @else {
+        <a mat-flat-button routerLink="login"> Login </a>
+        <a mat-flat-button routerLink="signup"> Sign Up </a>}
+      </div>
+    </div>
   </div>
 </main>
