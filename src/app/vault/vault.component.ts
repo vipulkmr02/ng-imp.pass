@@ -7,6 +7,7 @@ import { CommonModule } from "@angular/common";
 import { MatListModule } from "@angular/material/list";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { environment } from "../../environments/environment.development";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-vault",
@@ -23,6 +24,7 @@ import { environment } from "../../environments/environment.development";
   styleUrl: "./vault.component.css",
 })
 export class VaultComponent {
+  addDialog = inject(MatDialog)
   private passwordService = inject(PasswordService);
   passwords!: { pID: string; password: string; _id: string }[];
   visibility!: { [id: string]: boolean };
