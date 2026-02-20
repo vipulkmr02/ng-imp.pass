@@ -9,6 +9,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { AuthService } from "./auth.service";
 import { UiService } from "./ui.service";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @Component({
   selector: "app-root",
@@ -22,6 +23,7 @@ import { UiService } from "./ui.service";
     CommonModule,
     MatListModule,
     MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",

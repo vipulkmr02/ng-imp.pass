@@ -14,13 +14,13 @@
           </div>
           <div class="password-sec">
             <div>
-              {{ this.visibility[x._id] ? x.password : '*******' }}
+              {{ this.visibility[x._id] ? x.password : '' }}
             </div>
             <div class="buttons">
-              <button mat-icon-button (click)="toggleVisibility(x._id)">
+              <button [matTooltip]="'Show Password of ' + x.pID" mat-icon-button (click)="togglePasswordVisibility(x._id)">
                 <mat-icon>{{this.visibility[x._id] ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
-              <button mat-icon-button (click)="toggleVisibility(x._id)">
+              <button mat-icon-button (click)="copyPasswordToClipboard(x.password)">
                 <mat-icon>content_copy</mat-icon>
               </button>
             </div>
@@ -29,16 +29,14 @@
       </mat-list-item>
       }
     </mat-selection-list>
-  </div>
-  } @else {
+  </div> } @else {
   <div class="no-data">
     <mat-icon>cancel_outline</mat-icon>
     <h1>No Passwords</h1>
     <h4>Create by clicking the 'Add' button below.</h4>
-  </div>
-  }
+  </div> }
   <div class="bottom-buttons">
-    <button mat-flat-button>
+    <button (click)="btnAdd()" mat-flat-button>
       <mat-icon>add</mat-icon> Add
     </button>
   </div>

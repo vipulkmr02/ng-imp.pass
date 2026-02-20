@@ -1,21 +1,31 @@
 <main class="main-content">
   <div class="home-hero">
     <div class="home-hero-content fade-up">
-      <h1 class="home-title">Save Passwords<br>Access Anywhere</h1>
+      <h1 class="home-title">
+        Save Passwords<br>Access Anywhere
+      </h1>
       <p class="home-subtitle">
         A safe, secure, and user-friendly password manager.<br>
         Get started now and explore the features!
       </p>
-      <div class="home-actions">
-        @if (authService.getSessionToken()) {
-        <a mat-flat-button routerLink="vault">
-          <mat-icon>lock_outline</mat-icon>
-          Enter Vault
-        </a>}
-        @else {
-        <a mat-flat-button routerLink="login"> Login </a>
-        <a mat-flat-button routerLink="signup"> Sign Up </a>}
-      </div>
+      <!-- this is equated with true because I don't
+      want it to run on other truthy values -->
+      @if(this.authService.authenticated$|async) {
+      <div  class="home-actions">
+          <a mat-flat-button routerLink="vault">
+            <mat-icon>lock_outline</mat-icon>
+            Enter Vault
+          </a>
+      </div>}
+      @else{
+      <div  class="home-actions">
+          <a mat-flat-button routerLink="login">
+            Login
+          </a>
+          <a mat-flat-button routerLink="signup">
+            Sign Up
+          </a>
+      </div>}
     </div>
   </div>
 </main>

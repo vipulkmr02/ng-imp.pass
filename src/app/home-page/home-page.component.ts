@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,15 +14,16 @@ import { AuthService } from '../auth.service';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit {
   public authService = inject(AuthService)
-  currentYear: number = new Date().getFullYear();
   @Input('title') TITLE!:string;
+  name!: string
+  ngOnInit(): void { }
 }
 
 

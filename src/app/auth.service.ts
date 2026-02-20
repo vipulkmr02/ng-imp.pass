@@ -12,31 +12,41 @@ interface CREDENTIALS {
   providedIn: "root",
 })
 export class AuthService extends BaseClass {
-  public authenticated$ = new BehaviorSubject<boolean | null>(null);
+  public authenticated$ = new BehaviorSubject<boolean>(false);
   private sessionToken: string | null = null;
   private credentials: CREDENTIALS | null = null;
-  private headers = {
+  private requestHeaders = new Headers({
     "Content-Type": "application/json",
     "Access-Allow-Origin": "http://localhost:4200",
-  };
+  });
   protected override consoleHead = "[AUTH SERVICE]";
   constructor() {
     super();
     this.log("instantiated");
-  this.checkAuthState();
+    this.checkAuthState();
   }
   private checkAuthState() {
-    const accessToken = sessionStorage.getItem("token");
-    this.log("no-access-token");
-    if (accessToken) {
+    const sessionToken = sessionStorage.getItem("token");
+    if (sessionToken) {
       // TODO: no validation of this accessToken
-      this.sessionToken = accessToken;
+      this.sessionToken = sessionToken;
       this.log("session token found from Session Storage");
-      this.log(this.sessionToken);
-      this.authenticated$.next(true);
-    } else {
-      this.authenticated$.next(false);
-    }
+      if (this.sessionToken != null && this.sessionToken !== '') {
+        let sessionOk = Boolean(this.validateSession());
+        this.authenticated$.next(sessionOk)
+      }
+      else this.authenticated$.next(false);
+    } else this.authenticated$.next(false);
+
+  }
+  private validateSession() {
+    let headers = this.requestHeaders;
+    let sessionToken = this.sessionToken
+    if (sessionToken === '') throw "No sessionToken, but validateSession called"
+    headers.append("Authorization", "Session " + sessionToken!)
+    return fetch(`${env.API}/validateSession`, { headers: headers })
+      .then(res => res.json())
+      .then(json => json.sessionOk)
   }
   private saveSessionToken(token: string) {
     sessionStorage.setItem("token", token);
@@ -45,13 +55,20 @@ export class AuthService extends BaseClass {
   public initializeSession() {
     this.log("initiating session");
     return fetch(`${env.API}/initSession`, {
-      headers: { ...this.headers, ...this.credentials },
+      headers: { ...this.requestHeaders, ...this.credentials },
     }).then((res) => res.json())
       .then((json) => {
         const sessionToken = json.sessionID;
         if (sessionToken) {
           this.sessionToken = sessionToken;
           this.saveSessionToken(sessionToken);
+          this.validateSession().then(sessionOk => {
+            if (sessionOk) {
+              this.authenticated$.next(true);
+              this.credentials = null;
+            }
+            else this.authenticated$.next(false);
+          })
         } else throw "No session Token received";
       });
   }
@@ -60,7 +77,7 @@ export class AuthService extends BaseClass {
     return fetch(`${env.API}/register`, {
       method: "POST",
       body: JSON.stringify(this.credentials),
-      headers: this.headers,
+      headers: this.requestHeaders,
     });
   }
   public getSessionToken() {

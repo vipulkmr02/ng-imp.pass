@@ -13,7 +13,6 @@ export const logoutGuard: CanActivateFn = (route, state) => {
     auth.logout();
     return true;
   } else {
-    router.navigateByUrl("");
     return false;
   }
 };
