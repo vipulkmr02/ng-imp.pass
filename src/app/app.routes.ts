@@ -5,6 +5,7 @@ import { VaultComponent } from "./vault/vault.component";
 import { authGuard } from "./auth.guard";
 import { logoutGuard } from "./logout.guard";
 import { MessageComponent } from "./message/message.component";
+import { AddNewPasswordComponent } from "./add-new-password/add-new-password.component";
 
 export const routes: Routes = [
   {
@@ -30,5 +31,10 @@ export const routes: Routes = [
     path: "logout",
     canActivate: [logoutGuard],
     component: MessageComponent
+  },
+  {
+    path: "add-new-password",
+    canActivate: [authGuard],
+    component: AddNewPasswordComponent
   },
 ];

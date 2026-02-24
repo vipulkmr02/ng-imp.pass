@@ -5,26 +5,29 @@
         Save Passwords<br>Access Anywhere
       </h1>
       <p class="home-subtitle">
-        A safe, secure, and user-friendly password manager.<br>
-        Get started now and explore the features!
+        A safe, secure, and user-friendly password manager
       </p>
       <!-- this is equated with true because I don't
       want it to run on other truthy values -->
       @if(this.authService.authenticated$|async) {
-      <div  class="home-actions">
+      <div class="home-actions">
+          <a mat-flat-button routerLink="add-new-password">
+            <mat-icon>add</mat-icon>
+            Add Password
+          </a>
+          <a mat-flat-button routerLink="password-generator">
+            <mat-icon>password</mat-icon>
+            Password Generator
+          </a>
           <a mat-flat-button routerLink="vault">
             <mat-icon>lock_outline</mat-icon>
             Enter Vault
           </a>
       </div>}
       @else{
-      <div  class="home-actions">
-          <a mat-flat-button routerLink="login">
-            Login
-          </a>
-          <a mat-flat-button routerLink="signup">
-            Sign Up
-          </a>
+      <div class="home-actions">
+          <a mat-flat-button routerLink="login"> Login </a>
+          <a mat-flat-button routerLink="signup"> Sign Up </a>
       </div>}
     </div>
   </div>

@@ -30,8 +30,8 @@ export class PasswordService extends BaseClass {
     });
   }
   public createPassword(pID: string, password: string) {
-    fetch(`${env.API}/create`, {
-      method: "POST",
+    fetch(`${env.API}/new`, {
+      method: "PUT",
       body: JSON.stringify({
         pID: pID,
         password: password,

@@ -10,6 +10,8 @@ import { environment } from "../../environments/environment.development";
 import { MatDialog } from "@angular/material/dialog";
 import { AddPasswordFormComponent } from "./add-password-form/add-password-form.component";
 import { MatTooltip } from "@angular/material/tooltip";
+import { MatSpinner } from "@angular/material/progress-spinner";
+import { UiService } from "../ui.service";
 
 @Component({
   selector: "app-vault",
@@ -21,31 +23,22 @@ import { MatTooltip } from "@angular/material/tooltip";
     MatGridListModule,
     MatListModule,
     MatTooltip
-],
+  ],
   templateUrl: "./vault.component.html",
   styleUrl: "./vault.component.css",
 })
 export class VaultComponent {
   private _dialog = inject(MatDialog)
+  private _uiService = inject(UiService);
   private _passwordService = inject(PasswordService);
   private snackBar = inject(MatSnackBar);
   passwords!: { pID: string; password: string; _id: string }[];
   visibility!: { [id: string]: boolean };
   constructor() {
-    if (!environment.production) {
-      this.passwords = [
-        { pID: "google", password: "google", _id: "123" },
-        { pID: "facebook", password: "facebook", _id: "234" },
-        { pID: "github", password: "gh_token_abc", _id: "345" },
-        { pID: "twitter", password: "twit@2025", _id: "456" },
-        { pID: "bank", password: "Bank$ecure2025", _id: "567" },
-        { pID: "work-email", password: "WorkMail!pass", _id: "678" },
-      ];
-    } else {
-      this._passwordService.getAllPasswords().then((passwords) =>
-        this.passwords = passwords
-      );
-    }
+    this._uiService.setLoading(true);
+    this._passwordService.getAllPasswords().then(
+      (passwords) => this.passwords = passwords
+    ).finally(() => this._uiService.setLoading(false));
     this.visibility = {};
     for (const x of this.passwords) {
       this.visibility[x._id] = false;
@@ -61,7 +54,7 @@ export class VaultComponent {
     this.visibility[id] = !this.visibility[id];
   }
   btnAdd() {
-    const dialogRef = this._dialog.open(AddPasswordFormComponent,{
+    const dialogRef = this._dialog.open(AddPasswordFormComponent, {
       "width": "500px",
       "enterAnimationDuration": 200,
       "exitAnimationDuration": 200
@@ -71,8 +64,8 @@ export class VaultComponent {
     dialogRef.componentInstance.passwordAdded.subscribe((newPassword: { pID: string; password: string }) => {
       this.passwords.push({ pID: newPassword.pID, password: newPassword.password, _id: Date.now().toString() });
       this.visibility[this.passwords[this.passwords.length - 1]._id] = false;
-      this.snackBar.open("Password added successfully", "OK", {
-        "duration": 2000,
+      this.snackBar.open("Password added successfully", "", {
+        "duration": 1000,
       })
     })
   }
