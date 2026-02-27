@@ -10,6 +10,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { AuthService } from "./auth.service";
 import { UiService } from "./ui.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-root",
@@ -23,7 +24,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     CommonModule,
     MatListModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",

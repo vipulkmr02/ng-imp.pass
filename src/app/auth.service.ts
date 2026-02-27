@@ -1,7 +1,8 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { BaseClass } from "./base.class";
 import { environment as env } from "../environments/environment";
 import { BehaviorSubject } from "rxjs";
+import { UiService } from "./ui.service";
 
 interface CREDENTIALS {
   email: string;
@@ -25,6 +26,7 @@ export class AuthService extends BaseClass {
     this.log("instantiated");
     this.checkAuthState();
   }
+  public uiService = inject(UiService);
   private checkAuthState() {
     const sessionToken = sessionStorage.getItem("token");
     if (sessionToken) {
@@ -46,7 +48,15 @@ export class AuthService extends BaseClass {
     headers.append("Authorization", "Session " + sessionToken!)
     return fetch(`${env.API}/validateSession`, { headers: headers })
       .then(res => res.json())
-      .then(json => json.sessionOk)
+      .then(json => {
+        if ("message" in json) {
+          console.log(json.message)
+          this.uiService.showSnackBar(json.message, "", );
+          this.logout();
+          return false;
+        }
+        return json.sessionOK
+      })
   }
   private saveSessionToken(token: string) {
     sessionStorage.setItem("token", token);
